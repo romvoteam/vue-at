@@ -71,6 +71,10 @@ export default {
     minLength: {
       type: Number,
       default: 3
+    },
+    onSearch: {
+      type: Function,
+      required: true
     }
   },
 
@@ -305,7 +309,7 @@ export default {
           this.closePanel()
         } else {
           const { members, filterMatch, itemName, minLength } = this
-          if (!keep && chunk) { // fixme: should be consistent with AtTextarea.vue
+          if (!keep && chunk && chunk.length >= minLength) { // fixme: should be consistent with AtTextarea.vue
             this.$emit('at', chunk)
           }
           const matched = members.filter(v => {
@@ -313,6 +317,7 @@ export default {
             return filterMatch(name, chunk, at)
           })
           if (matched.length && chunk.length >= minLength) {
+            this.onSearch();
             this.openPanel(matched, range, index, at)
           } else {
             this.closePanel()
