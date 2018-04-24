@@ -67,6 +67,10 @@ export default {
     scrollRef: {
       type: String,
       default: ''
+    },
+    minLength: {
+      type: Number,
+      default: 3
     }
   },
 
@@ -300,7 +304,7 @@ export default {
         if (!show) {
           this.closePanel()
         } else {
-          const { members, filterMatch, itemName } = this
+          const { members, filterMatch, itemName, minLength } = this
           if (!keep && chunk) { // fixme: should be consistent with AtTextarea.vue
             this.$emit('at', chunk)
           }
@@ -308,7 +312,7 @@ export default {
             const name = itemName(v)
             return filterMatch(name, chunk, at)
           })
-          if (matched.length) {
+          if (matched.length && chunk.length >= minLength) {
             this.openPanel(matched, range, index, at)
           } else {
             this.closePanel()
