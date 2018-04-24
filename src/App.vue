@@ -1,22 +1,6 @@
 <template>
   <div id="app">
-    <at :members="members" name-key="name" v-model="html">
-      <!-- custom: same as default slot -->
-      <!-- <template slot="item" scope="s">
-        <span v-text="s.item"></span>
-      </template> -->
-
-      <!-- custom: with avatars -->
-      <template slot="item" scope="s">
-        <img class="avatar" :src="s.item.avatar">
-        <span v-text="s.item.name"></span>
-      </template>
-
-      <div class="editor"
-        contenteditable></div>
-    </at>
-
-    <at :members="members" name-key="name" v-model="html2">
+    <at :members="members" :on-search="findMembers" name-key="name" v-model="html2">
       <!-- custom: same as default slot -->
       <!-- <template slot="item" scope="s">
         <span v-text="s.item"></span>
@@ -35,18 +19,6 @@
       <div class="editor"
         contenteditable></div>
     </at>
-
-    <br />
-
-    <at-ta :members="members" name-key="name" v-model="text">
-      <!-- custom: with avatars -->
-      <template slot="item" scope="s">
-        <img :src="s.item.avatar">
-        <span v-text="s.item.name"></span>
-      </template>
-
-      <textarea class="editor"></textarea>
-    </at-ta>
   </div>
 </template>
 
@@ -81,6 +53,7 @@ export default {
   data () {
     const data = {
       members,
+      members2: members,
       text: `
 <<< Textarea >>>
 Awesome Electron 
@@ -110,6 +83,15 @@ Playback - Video player.
     }
     data.html2 = data.html
     return data
+  },
+  methods: {
+    findMembers() {
+      this.members = [];
+
+      setTimeout(() => {
+        this.members = this.members2;
+      }, 2500);
+    }
   }
 }
 </script>
