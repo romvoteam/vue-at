@@ -75,6 +75,10 @@ export default {
     onSearch: {
       type: Function,
       required: true
+    },
+    atsClasses: {
+      type: Array,
+      default: () => []
     }
   },
 
@@ -85,7 +89,8 @@ export default {
       bindsValue: this.value != null,
       customsEmbedded: false,
       hasComposition: false,
-      atwho: null
+      atwho: null,
+      usedAt: '',
     }
   },
   computed: {
@@ -317,8 +322,12 @@ export default {
             return filterMatch(name, chunk, at)
           })
           if (matched.length && chunk.length >= minLength) {
-            this.onSearch();
+            if (!keep) {
+              this.onSearch(at);
+            }
+
             this.openPanel(matched, range, index, at)
+            this.usedAt = at
           } else {
             this.closePanel()
           }
@@ -410,6 +419,10 @@ export default {
       newElement.appendChild(document.createTextNode(' '))
       newElement.setAttribute('data-at-embedded', '')
       newElement.setAttribute("contenteditable", false)
+      
+      if (this.atsClasses.length) {
+        newElement.setAttribute('class', this.atsClasses[this.ats.indexOf(this.usedAt)]);
+      }
 
       if (node.nodeType === Node.TEXT_NODE) {
         const cut = r.endOffset

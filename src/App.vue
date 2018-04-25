@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <at :members="members" :on-search="findMembers" name-key="name" v-model="html2">
+    <at :members="members" :on-search="findMembers" name-key="name" v-model="html" :ats="['@', '#']" :ats-classes="['mention', 'hashtag']">
       <!-- custom: same as default slot -->
       <!-- <template slot="item" scope="s">
         <span v-text="s.item"></span>
@@ -40,7 +40,25 @@ let members = [
   "amy.sandoval","katie.leonard","lottie.hamilton",
   /* eslint-enable */
 ]
+
+let hashtags = [
+  /* eslint-disable */
+  "Roxie Miles2","grace.carroll",
+  "小浩",
+  "Helena Perez","melvin.miller",
+  "椿木",
+  "myrtie.green","elsie.graham","Elva Neal",
+  "肖逵",
+  "amy.sandoval","katie.leonard","lottie.hamilton",
+  /* eslint-enable */
+]
 members = members.map((v, i) => {
+  return {
+    avatar: `https://randomuser.me/api/portraits/men/${i % 5}.jpg`,
+    name: v
+  }
+})
+hashtags = hashtags.map((v, i) => {
   return {
     avatar: `https://randomuser.me/api/portraits/men/${i % 5}.jpg`,
     name: v
@@ -54,42 +72,23 @@ export default {
     const data = {
       members,
       members2: members,
-      text: `
-<<< Textarea >>>
-Awesome Electron 
-Useful resources for creating apps with Electron
-Inspired by the awesome list thing. You might also like awesome-nodejs.
-Example apps
-Some good apps written with Electron.
-Open Source
-Atom - Code editor.
-Nuclide - Unified IDE.
-Playback - Video player.
-Awesome Electron 
-Useful resources for creating apps with Electron
-Inspired by the awesome list thing. You might also like awesome-nodejs.
-Example apps
-Some good apps written with Electron.
-Open Source
-Atom - Code editor.
-Nuclide - Unified IDE.
-Playback - Video player.
-      `.trim(), // fix trailing abnormal nodes
-      html: `
-        <div>&lt;&lt;&lt; Content Editable Div &gt;&gt;&gt;</div><div>Awesome Electron&nbsp;
-        <img src="static/awesome.svg"></div><div><img style="max-width: 50px;" src="static/electron.svg"></div><div>Useful resources for creating apps with&nbsp;Electron</div><div>Inspired by the&nbsp;awesome&nbsp;list thing. You might also like&nbsp;awesome-nodejs.</div><div>Example apps</div><div>Some good apps written with Electron.</div><div>Open Source</div><div>Atom&nbsp;- Code editor.</div><div>Nuclide&nbsp;- Unified IDE.</div><div>Playback&nbsp;- Video player.</div>
-        <div>&lt;&lt;&lt; Content Editable Div &gt;&gt;&gt;</div><div>Awesome Electron&nbsp;<img style="max-width: 50px;" src="static/awesome.svg"></div><div><img style="max-width: 50px;" src="static/electron.svg"></div><div>Useful resources for creating apps with&nbsp;Electron</div><div>Inspired by the&nbsp;awesome&nbsp;list thing. You might also like&nbsp;awesome-nodejs.</div><div>Example apps</div><div>Some good apps written with Electron.</div><div>Open Source</div><div>Atom&nbsp;- Code editor.</div><div>Nuclide&nbsp;- Unified IDE.</div><div>Playback&nbsp;- Video player.</div>
-      `.trim() // fix trailing abnormal nodes
+      text: '',
+      html: ''
     }
-    data.html2 = data.html
     return data
   },
   methods: {
-    findMembers() {
+    findMembers(symbol) {
       this.members = [];
 
       setTimeout(() => {
-        this.members = this.members2;
+        if (symbol === '@') {
+          this.members = this.members2;
+        }
+
+        if (symbol === '#') {
+          this.members = hashtags;
+        }
       }, 2500);
     }
   }
@@ -145,5 +144,15 @@ textarea {
   vertical-align: top;
   margin-left: 40px;
   margin-top: 30px;
+}
+
+.mention .tag {
+  background: red;
+  color: white;
+}
+
+.hashtag .tag {
+  background: cyan;
+  color: yellowgreen;
 }
 </style>
