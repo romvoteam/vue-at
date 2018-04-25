@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <at :members="members" :on-search="findMembers" name-key="name" v-model="html" :ats="['@', '#']" :ats-classes="['mention', 'hashtag']">
+    <at :members="members" :on-search="findMembers" name-key="name" v-model="html" :ats="['@', '#']" :ats-classes="['mention', 'hashtag']" :keep-at="true">
       <!-- custom: same as default slot -->
       <!-- <template slot="item" scope="s">
         <span v-text="s.item"></span>
       </template> -->
 
       <span slot="embeddedItem" slot-scope="s">
-        <span class="tag"><img class="avatar" :src="s.current.avatar">{{ s.current.name }}</span>
+        <span class="tag"><img class="avatar" :src="s.current.avatar"><span v-if="s.keepAt">{{ s.usedAt }}</span>{{ s.current.name }}</span>
       </span>
 
       <!-- custom: with avatars -->

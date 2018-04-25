@@ -33,7 +33,7 @@
       </div>
     </div>
     <span v-show="false" ref="embeddedItem">
-      <slot name="embeddedItem" :current="currentItem"></slot>
+      <slot name="embeddedItem" :current="currentItem" :used-at="usedAt" :keep-at="keepAt"></slot>
     </span>
     <slot></slot>
   </div>

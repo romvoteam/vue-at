@@ -79,6 +79,10 @@ export default {
     atsClasses: {
       type: Array,
       default: () => []
+    },
+    keepAt: {
+      type: Boolean,
+      default: false
     }
   },
 
