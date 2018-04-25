@@ -325,11 +325,10 @@ export default {
             const name = itemName(v)
             return filterMatch(name, chunk, at)
           })
+          if (!keep) {
+            this.onSearch(at, chunk);
+          }
           if (matched.length && chunk.length >= minLength) {
-            if (!keep) {
-              this.onSearch(at, chunk);
-            }
-
             this.openPanel(matched, range, index, at)
             this.usedAt = at
           } else {
