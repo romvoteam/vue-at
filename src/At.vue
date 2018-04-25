@@ -327,7 +327,7 @@ export default {
           })
           if (matched.length && chunk.length >= minLength) {
             if (!keep) {
-              this.onSearch(at);
+              this.onSearch(at, chunk);
             }
 
             this.openPanel(matched, range, index, at)
