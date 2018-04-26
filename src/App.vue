@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <at :members="members" :on-search="findMembers" name-key="name" v-model="html" :ats="['@', '#']" :ats-classes="['mention', 'hashtag']" :keep-at="true">
+    <at :members="members" :on-search="findMembers" :on-select-item="itemSelected" name-key="name" v-model="html" :ats="['@', '#']" :ats-classes="['mention', 'hashtag']" :keep-at="true">
       <!-- custom: same as default slot -->
       <!-- <template slot="item" scope="s">
         <span v-text="s.item"></span>
@@ -90,7 +90,10 @@ export default {
           this.members = hashtags;
         }
       }, 2500);
-    }
+    },
+    itemSelected(item) {
+      console.log('Item selected', item);
+    },
   }
 }
 </script>

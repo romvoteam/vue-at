@@ -76,6 +76,10 @@ export default {
       type: Function,
       required: true
     },
+    onSelectItem: {
+      type: Function,
+      required: false
+    },
     atsClasses: {
       type: Array,
       default: () => []
@@ -454,6 +458,8 @@ export default {
       applyRange(r)
       applyRange(r)
       const curItem = list[cur]
+
+      this.onSelectItem && this.onSelectItem(curItem);
 
       if (customsEmbedded) {
         // `suffix` is ignored as `customsEmbedded=true` has to be

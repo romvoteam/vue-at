@@ -1,7 +1,7 @@
 {
   "name": "async-vue-at",
   "description": "Aync At.js for Vue",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Fritz Lin <uxfritz@163.com>",
   "contributors": ["Romvo Team <developers@romvo.io>"],
   "repository": "https://github.com/fritx/vue-at",
